@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pinecone-client
+sentence-transformers
+transformers
+python-multipart
+requests
+pydantic
+gunicorn
+# optionally: pdfminer.six or pymupdf for pdf parsing if ingesting PDF
+pymupdf
+langchain
+docx
+fitz
+google-generativeai

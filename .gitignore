@@ -1,0 +1,17 @@
+# Environment variables
+.env
+
+# Other common ignores (optional)
+node_modules/
+__pycache__/
+*.log
+chat_request_test.py
+document.txt
+venv/
+Heart_Attack_Awareness_and_Prevention.pdf
+Managing_High_Blood_Pressure.pdf
+test_ingest.py
+test_multi_upload.py
+test.py
+Understanding_Depression_and_Anxiety.pdf
+Understanding_Type_2_Diabetes.pdf
