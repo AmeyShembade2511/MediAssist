@@ -11,5 +11,3 @@ Run:
 - Start frontend: cd frontend && npm install && npm start
 - Start FASTApi Server: python -m venv venv && venv\Scripts\activate && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-Notes:
-- The backend uses a simple paragraph-scan retrieval and local file indexing for demo/testing. Replace `services/rag.js` with a real vector DB and LLM provider for production.
