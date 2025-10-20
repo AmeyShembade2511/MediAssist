@@ -92,28 +92,30 @@ def chat(req: ChatRequest):
         chunk_index = meta.get("chunk_index", "n/a")
         snippets.append(f"[{i+1}] Source: {src} | chunk_index: {chunk_index}\n{chunk_text}\n")
 
-    # 4. build prompt
+    # 4. build simplified prompt (no citations)
     role = req.role or "doctor"
     system_preamble = (
-        "You are a medical assistant. Use only the provided source snippets for factual claims. "
-        "When you state a clinical fact, include a bracketed citation to the snippet number(s). "
-        "If information is not supported by the snippets, say you cannot confirm and suggest consulting official guidelines or a clinician."
+        "You are a helpful and knowledgeable medical assistant. "
+        "Use the information provided in the snippets to give an accurate and concise answer. "
+        "Do not include citations, snippet numbers, or references. "
+        "If information is missing or uncertain, respond carefully and mention that it may require clinical judgment."
     )
 
     snippet_block = "\n---\n".join(snippets) if snippets else ""
     prompt = (
-        f"{system_preamble}\nUser role: {role}\nQuestion: {req.question}\n\n"
-        f"Retrieved snippets (most relevant first):\n{snippet_block}\n\n"
-        "Instructions: Provide (1) short answer (2-3 sentences) with citations like [1], [2]; "
-        "(2) a short plain-language explanation; (3) list of snippet citations used.\n"
+        f"{system_preamble}\n\n"
+        f"User role: {role}\n"
+        f"Question: {req.question}\n\n"
+        f"Relevant context from retrieved snippets:\n{snippet_block}\n\n"
+        "Instructions: Provide a short, well-structured answer (2–3 sentences) written naturally without any citation markers or source numbers. "
+        "Avoid listing snippet identifiers or file names."
     )
 
     # 5. call Gemini
-    llm_resp = call_gemini(prompt, temperature=0.0, max_tokens=512)
-    
-    # Return only plain Python types
+    llm_resp = call_gemini(prompt, temperature=0.2, max_tokens=512)
+
+    # Return response
     return {
         "answer": llm_resp["text"],
-        # "raw_llm": llm_resp["raw"],
         "retrieved": matches
     }

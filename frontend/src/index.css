@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f6fa;
+}
+
+.navbar {
+  background: #273c75;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.chat-container, .admin-dashboard, .compare-drugs, .summarize-protocol, .explain-mode {
+  max-width: 800px;
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.message-bubble.user {
+  background: #dff9fb;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 5px;
+  align-self: flex-end;
+}
+
+.message-bubble.bot {
+  background: #f6e58d;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 5px;
+  align-self: flex-start;
+}
+
+button {
+  background: #44bd32;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4cd137;
+}
