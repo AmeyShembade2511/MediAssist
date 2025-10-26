@@ -1,9 +1,14 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 import feedbackRoutes from "./routes/feedback.js";
 import adminRoutes from "./routes/admin.js";
 import summaryRoutes from "./routes/summary.js";
+import authRoutes from "./routes/auth.js";
+import { requireAuth } from "./middleware/authMiddleware.js";
+
+dotenv.config({ path: "../.env" });
 
 const app = express();
 app.use(cors());
@@ -13,6 +18,15 @@ app.use(bodyParser.json({ limit: "10mb" }));
 app.use("/feedback", feedbackRoutes);
 app.use("/admin", adminRoutes);
 app.use("/summary", summaryRoutes);
+app.use("/auth", authRoutes);
+
+// Simple health
+app.get("/", (_, res) => res.send({ status: "ok" }));
+
+// Example protected route
+app.get("/protected", requireAuth, (req, res) => {
+  res.json({ message: "This is protected", user: req.user });
+});
 
 // Proxy to FastAPI RAG backend
 app.post("/chat", async (req, res) => {
@@ -42,5 +56,7 @@ app.post("/upload", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 app.listen(5000, () => console.log("✅ Express API running on http://127.0.0.1:5000"));
